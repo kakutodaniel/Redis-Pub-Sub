@@ -20,29 +20,32 @@ namespace Redis.Subscriber._2
 
             var db = connection.GetDatabase();
 
-            while (true)
+            var all = db.ListRange("key1");
+            Random rnd = new Random();
+
+            foreach (var item in all)
             {
-                var pop = db.ListLeftPop("key1");
+               
+                var rndValue = rnd.Next(1000, 3000);
+                Console.WriteLine($"random: {rndValue}");
 
-                if (pop.HasValue)
+                Thread.Sleep(rndValue);
+
+                var t = db.ListRemove("key1", item);
+                var v = System.Text.Encoding.Default.GetString((byte[])item.Box());
+
+                if (t == 0)
                 {
-
-                    Console.WriteLine(System.Text.Encoding.Default.GetString((byte[])pop.Box()));
-
-                    //Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff")}<Subscriber.1 - Normal - {channel}><{message}>.");
+                    Console.WriteLine($"{v} already removed");
                 }
                 else
                 {
-                    break;
+                    Console.WriteLine($"removed item {v}");
                 }
-
-                Thread.Sleep(4000);
             }
 
-            //Task.Run(() =>
+            //while (true)
             //{
-            //    //var lst = db.ListGetByIndex("key1", 0);
-
             //    var pop = db.ListLeftPop("key1");
 
             //    if (pop.HasValue)
@@ -50,11 +53,15 @@ namespace Redis.Subscriber._2
 
             //        Console.WriteLine(System.Text.Encoding.Default.GetString((byte[])pop.Box()));
 
-            //        //Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff")}<Subscriber.1 - Normal - {channel}><{message}>.");
+            //        Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff")}<Subscriber.1 - Normal - {channel}><{message}>.");
+            //    }
+            //    else
+            //    {
+            //        break;
             //    }
 
-            //});
-
+            //    Thread.Sleep(4000);
+            //}
 
             subscriber.Subscribe(channelName, (channel, message) =>
             {
