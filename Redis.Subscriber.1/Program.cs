@@ -1,7 +1,9 @@
 ﻿using StackExchange.Redis;
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Redis.Subscriber._1
 {
@@ -19,29 +21,29 @@ namespace Redis.Subscriber._1
 
             var db = connection.GetDatabase();
 
-            var all = db.ListRange("key1");
-            Random rnd = new Random();
+            //var all = db.ListRange("key1");
+            //Random rnd = new Random();
 
-            foreach (var item in all)
-            {
-                
-                var rndValue = rnd.Next(1001, 3001);
-                Console.WriteLine($"random: {rndValue}");
+            //foreach (var item in all)
+            //{
 
-                Thread.Sleep(rndValue);
+            //    var rndValue = rnd.Next(1001, 3001);
+            //    Console.WriteLine($"random: {rndValue}");
 
-                var t = db.ListRemove("key1", item);
-                var v = System.Text.Encoding.Default.GetString((byte[])item.Box());
+            //    Thread.Sleep(rndValue);
 
-                if (t == 0)
-                {
-                    Console.WriteLine($"{v} already removed");
-                }
-                else
-                {
-                    Console.WriteLine($"removed item {v}");
-                }
-            }
+            //    var t = db.ListRemove("key1", item);
+            //    var v = System.Text.Encoding.Default.GetString((byte[])item.Box());
+
+            //    if (t == 0)
+            //    {
+            //        Console.WriteLine($"{v} already removed");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine($"removed item {v}");
+            //    }
+            //}
 
             //while (true)
             //{
@@ -66,16 +68,22 @@ namespace Redis.Subscriber._1
 
             subscriber.Subscribe(channelName, (channel, message) =>
             {
-                var pop = db.ListLeftPop("key1");
-
-                if (pop.HasValue)
+                try
                 {
-                    Console.WriteLine(System.Text.Encoding.Default.GetString((byte[])pop.Box()));
-                    //Console.WriteLine($"[Subscriber.2] - {message}");
+                    var pop = db.ListLeftPop("key1");
+
+                    if (pop.HasValue)
+                    {
+                        var content = System.Text.Encoding.Default.GetString((byte[])pop.Box());
+                        db.ListRightPush("key2", content);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
                 }
 
-                //Thread.Sleep(5000);
-                //Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fffffff")}<Subscriber.2 - Normal - {channel}><{message}>.");
             });
 
             Thread.Sleep(Timeout.Infinite);

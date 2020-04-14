@@ -18,9 +18,9 @@ namespace Redis.Publisher
 
             var key = new RedisKey("key1");
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 50; i < 100; i++)
             {
-                var vl = new RedisValue($"pub-value-{i}");
+                var vl = new RedisValue($"pub1-value-{i}");
                 db.ListRightPush(key, vl);
                 publisher.Publish(channelName, vl, CommandFlags.FireAndForget);
             }

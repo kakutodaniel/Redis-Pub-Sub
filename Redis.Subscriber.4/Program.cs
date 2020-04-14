@@ -1,17 +1,15 @@
 ﻿using StackExchange.Redis;
 using System;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading;
 
-namespace Redis.Subscriber._2
+namespace Redis.Subscriber._4
 {
     class Program
     {
         static void Main(string[] args)
         {
-
             var configuration = ConfigurationOptions.Parse("localhost:6379");
 
             var connection = ConnectionMultiplexer.Connect(configuration);
@@ -28,7 +26,7 @@ namespace Redis.Subscriber._2
             //foreach (var item in all)
             //{
 
-            //    var rndValue = rnd.Next(1000, 3000);
+            //    var rndValue = rnd.Next(1001, 3001);
             //    Console.WriteLine($"random: {rndValue}");
 
             //    Thread.Sleep(rndValue);
@@ -55,15 +53,17 @@ namespace Redis.Subscriber._2
 
             //        Console.WriteLine(System.Text.Encoding.Default.GetString((byte[])pop.Box()));
 
-            //        Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff")}<Subscriber.1 - Normal - {channel}><{message}>.");
+            //        //Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff")}<Subscriber.1 - Normal - {channel}><{message}>.");
             //    }
             //    else
             //    {
-            //        break;
+            //        //break;
+            //        Environment.Exit(-1);
             //    }
 
-            //    Thread.Sleep(4000);
+            //    Thread.Sleep(1000);
             //}
+
 
             subscriber.Subscribe(channelName, (channel, message) =>
             {
@@ -86,7 +86,6 @@ namespace Redis.Subscriber._2
             });
 
             Thread.Sleep(Timeout.Infinite);
-
         }
     }
 }
