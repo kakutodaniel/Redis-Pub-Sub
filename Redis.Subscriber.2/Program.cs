@@ -15,7 +15,6 @@ namespace Redis.Subscriber._2
 
         static void Main(string[] args)
         {
-
             var configuration = ConfigurationOptions.Parse("localhost:6379");
 
             var connection = ConnectionMultiplexer.Connect(configuration);

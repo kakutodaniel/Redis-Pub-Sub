@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redis.Subscriber.1", "Redis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redis.Subscriber.2", "Redis.Subscriber.2\Redis.Subscriber.2.csproj", "{278DC339-9425-4DE9-9D4C-D004EF6B5E96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Publisher.1", "Redis.Publisher.1\Redis.Publisher.1.csproj", "{8C132B70-2353-4705-BA16-6F5A303A5F76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redis.Publisher.1", "Redis.Publisher.1\Redis.Publisher.1.csproj", "{8C132B70-2353-4705-BA16-6F5A303A5F76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Subscriber.3", "Redis.Subscriber.3\Redis.Subscriber.3.csproj", "{131F447B-DE12-45F5-8BA9-8C96D3F30BBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redis.Subscriber.3", "Redis.Subscriber.3\Redis.Subscriber.3.csproj", "{131F447B-DE12-45F5-8BA9-8C96D3F30BBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Subscriber.4", "Redis.Subscriber.4\Redis.Subscriber.4.csproj", "{E6AA1E28-46A4-4DB5-942D-5353DEE0B6A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redis.Subscriber.4", "Redis.Subscriber.4\Redis.Subscriber.4.csproj", "{E6AA1E28-46A4-4DB5-942D-5353DEE0B6A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessCheck", "ProcessCheck\ProcessCheck.csproj", "{B43D19B9-31FA-4F53-8679-47311A7CA408}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{E6AA1E28-46A4-4DB5-942D-5353DEE0B6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6AA1E28-46A4-4DB5-942D-5353DEE0B6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6AA1E28-46A4-4DB5-942D-5353DEE0B6A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43D19B9-31FA-4F53-8679-47311A7CA408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43D19B9-31FA-4F53-8679-47311A7CA408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43D19B9-31FA-4F53-8679-47311A7CA408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43D19B9-31FA-4F53-8679-47311A7CA408}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
