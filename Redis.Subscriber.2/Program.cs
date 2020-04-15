@@ -1,14 +1,18 @@
 ﻿using StackExchange.Redis;
 using System;
-using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
 
 namespace Redis.Subscriber._2
 {
+    public class car
+    {
+        public string Nome { get; set; }
+    }
+
     class Program
     {
+        static Timer timer;
+
         static void Main(string[] args)
         {
 
@@ -24,6 +28,12 @@ namespace Redis.Subscriber._2
 
             var all = db.ListRange("key1");
             Random rnd = new Random();
+
+            timer = new Timer(Run, new car { Nome = "bmw" }, 0, 2000);
+
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+
+            //timer.Dispose();
 
             //foreach (var item in all)
             //{
@@ -65,28 +75,43 @@ namespace Redis.Subscriber._2
             //    Thread.Sleep(4000);
             //}
 
-            subscriber.Subscribe(channelName, (channel, message) =>
-            {
-                try
-                {
-                    var pop = db.ListLeftPop("key1");
+            //subscriber.Subscribe(channelName, (channel, message) =>
+            //{
+            //    try
+            //    {
+            //        var pop = db.ListLeftPop("key1");
 
-                    if (pop.HasValue)
-                    {
-                        var content = System.Text.Encoding.Default.GetString((byte[])pop.Box());
-                        db.ListRightPush("key2", content);
-                    }
-                }
-                catch (Exception ex)
-                {
+            //        if (pop.HasValue)
+            //        {
+            //            var content = System.Text.Encoding.Default.GetString((byte[])pop.Box());
+            //            db.ListRightPush("key2", content);
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
 
-                    Console.WriteLine(ex.Message);
-                }
+            //        Console.WriteLine(ex.Message);
+            //    }
 
-            });
+            //});
 
-            Thread.Sleep(Timeout.Infinite);
+            Console.ReadLine();
 
+           
+
+            //Thread.Sleep(Timeout.Infinite);
+
+        }
+
+        public static void OnProcessExit(object sender, EventArgs args)
+        {
+            timer.Dispose();
+        }
+
+        public static void Run(object state)
+        {
+            var ob = (car)state;
+            Console.WriteLine(ob.Nome);
         }
     }
 }
